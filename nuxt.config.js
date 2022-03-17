@@ -18,6 +18,7 @@ export default {
     GOOGLE_ANALYSTICS: process.env.google_analystics,
     GOOGLE_TAG_MANAGER: process.env.google_tag_manager,
     WEATHER_API: process.env.weather_api,
+    NHENTAI: process.env.nhentai,
   },
   telemetry: true,
   mode: 'spa',

@@ -32,6 +32,9 @@ export default {
       getCurrentCondition: [],
     }
   },
+  head: {
+    title: 'Cuaca hari ini',
+  },
   created() {
     this.getProduct()
   },

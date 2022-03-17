@@ -1,96 +1,130 @@
 <template>
-  <v-card class="mx-auto" max-width="500">
-    <v-card-text>
-      <v-spacer />
-      <div>Nhentai Downloader</div>
-      <v-form v-model="valid">
+  <v-app dark>
+    <v-container fluid>
+      <v-app-bar fixed app>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-toolbar-title v-text="title" />
         <v-spacer />
-        <v-col cols="15" md="15">
-          <v-text-field
-            v-model="nhentaiID"
-            :rules="Rules"
-            :counter="7"
-            label="Code nuclear"
-            pattern="[0-9]+"
-            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-            required
-            class="text-h4 text--primary mx-auto"
-          ></v-text-field>
-        </v-col>
-      </v-form>
-      <div class="text--primary">Download it with zip format or cbz format</div>
-    </v-card-text>
-    <v-card-actions>
-      <v-btn
-        text
-        color="cyan accent-4"
-        rel="noreferrer"
-        target="_blank"
-        href="http://localhost:8000/download/+{nhentaiID}+/zip"
-      >
-        Zip
-      </v-btn>
-      <v-spacer />
-      <v-btn
-        text
-        color="cyan accent-4"
-        rel="noreferrer"
-        target="_blank"
-        :href="{ linkCbz }"
-      >
-        Cbz
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+        <v-spacer />
+        <v-spacer />
+      </v-app-bar>
+
+      <v-navigation-drawer v-model="drawer" fixed bottom temporary>
+        <v-list nav dense>
+          <v-list-item-group
+            v-model="group"
+            active-class="deep-purple--text text--accent-4"
+          >
+            <NuxtLink to="/" class="removeunderline">
+              <v-list-item>
+                <v-list-item-title>Home</v-list-item-title>
+              </v-list-item>
+            </NuxtLink>
+
+            <NuxtLink to="/movie" class="removeunderline">
+              <v-list-item>
+                <v-list-item-title>Movie</v-list-item-title>
+              </v-list-item>
+            </NuxtLink>
+
+            <NuxtLink to="/on-going" class="removeunderline">
+              <v-list-item>
+                <v-list-item-title>On-Going</v-list-item-title>
+              </v-list-item>
+            </NuxtLink>
+
+            <NuxtLink to="/genre" class="removeunderline">
+              <v-list-item>
+                <v-list-item-title>Genre</v-list-item-title>
+              </v-list-item>
+            </NuxtLink>
+
+            <NuxtLink to="/about" class="removeunderline">
+              <v-list-item>
+                <v-list-item-title>About</v-list-item-title>
+              </v-list-item>
+            </NuxtLink>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
+    </v-container>
+    <v-card class="mx-auto" max-width="500">
+      <v-card-text>
+        <v-spacer />
+        <div>Nhentai Downloader</div>
+        <v-form v-model="valid" method="GET">
+          <v-spacer />
+          <v-col cols="15" md="15">
+            <v-text-field
+              v-model="nhentaiID"
+              :rules="Rules"
+              :counter="7"
+              label="Code nuclear"
+              maxlength="7"
+              pattern="[0-9]+"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+              required
+              class="text-h4 text--primary mx-auto"
+            ></v-text-field>
+          </v-col>
+        </v-form>
+        <div class="text--primary">
+          Download it with zip format or cbz format
+        </div>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn
+          color="cyan accent-4"
+          rel="noreferrer"
+          target="_blank"
+          :href="linkZip"
+          submit
+        >
+          Zip
+        </v-btn>
+        <v-spacer />
+        <v-btn
+          submit
+          color="cyan accent-4"
+          rel="noreferrer"
+          target="_blank"
+          :href="linkCbz"
+        >
+          Cbz
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-app>
 </template>
 <script>
 export default {
   data() {
     return {
+      drawer: false,
+      group: null,
       valid: false,
       nhentaiID: '',
-      linkZip:
-        `https://nhder.herokuapp.com/download/nhentai/` +
-        this.nhentaiID +
-        `/zip`,
-      linkCbz:
-        `https://nhder.herokuapp.com/download/nhentai/` +
-        this.nhentaiID +
-        `/cbz`,
       Rules: [
         (v) => !!v || 'Code nuclear is required',
         (v) => v.length <= 7 || 'Code nuclear must be less than 7 characters',
       ],
-
-      // email: '',
-      // emailRules: [
-      //   (v) => !!v || 'E-mail is required',
-      //   (v) => /.+@.+/.test(v) || 'E-mail must be valid',
-      // ],
     }
   },
   head: {
     title: 'Nhentai',
   },
-  created() {
-    this.withZip()
-    this.withCbz()
-  },
-  methods: {
-    async withZip() {
-      await this.$axios.get(this.linkZip).then((response) => {
-        window.open(response)
-        setTimeout(3000)
-        window.close()
-      })
+  computed: {
+    linkZip() {
+      return process.env.NHENTAI + this.nhentaiID + `/zip`
     },
-    async withCbz() {
-      await this.$axios.get(this.linkCbz).then((response) => {
-        window.open(response)
-        setTimeout(3000)
-        window.close()
-      })
+    linkCbz() {
+      return process.env.NHENTAI + this.nhentaiID + `/cbz`
     },
   },
 }
 </script>
+<style scoped>
+.removeunderline {
+  text-decoration: none;
+}
+</style>
