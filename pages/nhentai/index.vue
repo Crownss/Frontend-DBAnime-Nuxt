@@ -104,6 +104,7 @@ export default {
       group: null,
       valid: false,
       nhentaiID: '',
+      title:'DBAnime',
       Rules: [
         (v) => !!v || 'Code nuclear is required',
         (v) => v.length <= 7 || 'Code nuclear must be less than 7 characters',
