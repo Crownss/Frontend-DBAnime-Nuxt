@@ -74,7 +74,6 @@
       </v-card-text>
       <v-card-actions>
         <v-btn
-          submit
           color="deep-purple--text text--accent-4"
           rel="noreferrer"
           target="_blank"
@@ -84,7 +83,6 @@
         </v-btn>
         <v-spacer />
         <v-btn
-          submit
           color="deep-purple--text text--accent-4"
           rel="noreferrer"
           target="_blank"
