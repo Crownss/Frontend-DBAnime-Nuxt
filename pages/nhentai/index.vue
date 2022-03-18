@@ -74,18 +74,18 @@
       </v-card-text>
       <v-card-actions>
         <v-btn
-          color="cyan accent-4"
+          submit
+          color="deep-purple--text text--accent-4"
           rel="noreferrer"
           target="_blank"
           :href="linkZip"
-          submit
         >
           Zip
         </v-btn>
         <v-spacer />
         <v-btn
           submit
-          color="cyan accent-4"
+          color="deep-purple--text text--accent-4"
           rel="noreferrer"
           target="_blank"
           :href="linkCbz"
@@ -104,7 +104,7 @@ export default {
       group: null,
       valid: false,
       nhentaiID: '',
-      title:'DBAnime',
+      title: 'DBAnime',
       Rules: [
         (v) => !!v || 'Code nuclear is required',
         (v) => v.length <= 7 || 'Code nuclear must be less than 7 characters',
