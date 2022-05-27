@@ -4,11 +4,11 @@
       <v-spacer />
       <h3>
         I'm use
-        <a class="nuxt" href="https://nuxtjs.org"
+        <a class="nuxt" href="https://github.com/Crownss/Frontend-DBAnime-Nuxt"
           >Nuxt Js <v-icon small color="cyan darken-2">mdi-nuxt</v-icon></a
         >
         as frontend, and use
-        <a class="django" href="https://djangoproject.com"
+        <a class="django" href="https://github.com/Crownss/Backend-DBAnime-Django"
           >Django<v-icon small color="yellow darken-2"
             >mdi-language-python</v-icon
           ></a
