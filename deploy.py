@@ -15,8 +15,10 @@ def main() -> os.system:
         input2 = input("commit for github pages(optional): ")
         if len(input2) == 0:
             input2 = "Deployed 🚀"
+            open('dist/CNAME', 'w').write('dbanime.me')
             push2 = os.system('yarn master && git add -f dist && git commit -n -m \"'+input2+'\"&& git subtree push --prefix dist web gh-pages')
             return push2
+        open('CNAME', 'w').write('dbanime.me')
         push2 = os.system('yarn master && git add -f dist && git commit -n -m \"'+input2+'\"&& git subtree push --prefix dist web gh-pages')
         return push2
     elif choice == 3:
@@ -26,9 +28,11 @@ def main() -> os.system:
             return print("master commit couldn't blank !")
         if len(input2) == 0:
             input2 = "Deployed 🚀"
+            open('dist/CNAME', 'w').write('dbanime.me')
             push3 = os.system('git add . && git commit -m \"'+input1+'\" && git push origin master')
             push4 = os.system('yarn master && git add -f dist && git commit -n -m \"'+input2+'\"&& git subtree push --prefix dist web gh-pages')
             return push3, push4
+        open('dist/CNAME', 'w').write('dbanime.me')
         push3 = os.system('git add . && git commit -m \"'+input1+'\" && git push origin master')
         push4 = os.system('yarn master && git add -f dist && git commit -n -m \"'+input2+'\"&& git subtree push --prefix dist web gh-pages')
         return push3, push4

@@ -1,12 +1,19 @@
 <template>
   <v-app dark>
-    <v-text-field
-      v-model="search"
-      outlined
-      label="search"
-      rounded
-      danse
-    ></v-text-field>
+    <v-btn class="mr-auto" outlined color="black" @click="expand2 = !expand2">
+      search
+    </v-btn>
+    <br />
+    <v-expand-x-transition>
+      <v-text-field
+        v-show="expand2"
+        v-model="search"
+        outlined
+        label="search"
+        rounded
+        danse
+      ></v-text-field>
+    </v-expand-x-transition>
     <br />
     <v-row>
       <v-col
@@ -16,15 +23,16 @@
         no-gutters
         md="4"
       >
-        <v-card class="mx-auto" max-width="400">
+        <v-card class="mx-auto" max-width="400" rounded="xl">
           <v-img
             class="white--text text--primary align-end"
-            height="200px"
+            height="100%"
+            width="100%"
             :src="value.image_url"
           >
-            <v-card-title>{{ value.title }}</v-card-title>
           </v-img>
-
+          <v-card-title>{{ value.title }}</v-card-title>
+          <v-spacer />
           <v-card-subtitle class="pb-0">Type: {{ value.type }}</v-card-subtitle>
           <v-card-subtitle class="pb-0"
             >Episode: {{ value.episodes }}</v-card-subtitle
@@ -68,6 +76,7 @@ export default {
       getAllDB: [],
       search: '',
       slug: this.$route.params.slug,
+      expand2: false,
     }
   },
   head: {
