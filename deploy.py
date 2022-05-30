@@ -1,7 +1,7 @@
-import os, sys
+import os, sys, asyncio
 
-def main() -> os.system:
-    os.system('rm -rf out/ .next')
+async def main() -> os.system:
+    os.system('rm -rf dist/ .nuxt')
 
     print("1.master\n2.github pages\n3.both")
     choice =  int(input("choose you action: "))
@@ -15,12 +15,14 @@ def main() -> os.system:
         input2 = input("commit for github pages(optional): ")
         if len(input2) == 0:
             input2 = "Deployed 🚀"
-            open('dist/CNAME', 'w').write('dbanime.me')
-            push2 = os.system('yarn master && git add -f dist && git commit -n -m \"'+input2+'\"&& git subtree push --prefix dist web gh-pages')
-            return push2
-        open('CNAME', 'w').write('dbanime.me')
-        push2 = os.system('yarn master && git add -f dist && git commit -n -m \"'+input2+'\"&& git subtree push --prefix dist web gh-pages')
-        return push2
+            build = os.system('yarn master')
+            open('./dist/CNAME', 'w').write('dbanime.me')
+            push2 = os.system('git add -f dist && git commit -n -m \"'+input2+'\"&& git subtree push --prefix dist web gh-pages')
+            return build, push2
+        build = os.system('yarn master')
+        open('./dist/CNAME', 'w').write('dbanime.me')
+        push2 = os.system('git add -f dist && git commit -n -m \"'+input2+'\"&& git subtree push --prefix dist web gh-pages')
+        return build, push2
     elif choice == 3:
         input1 = input("commit for master: ")
         input2 = input("commit for github pages(optional): ")
@@ -28,14 +30,16 @@ def main() -> os.system:
             return print("master commit couldn't blank !")
         if len(input2) == 0:
             input2 = "Deployed 🚀"
-            open('dist/CNAME', 'w').write('dbanime.me')
             push3 = os.system('git add . && git commit -m \"'+input1+'\" && git push origin master')
-            push4 = os.system('yarn master && git add -f dist && git commit -n -m \"'+input2+'\"&& git subtree push --prefix dist web gh-pages')
-            return push3, push4
-        open('dist/CNAME', 'w').write('dbanime.me')
+            build = os.system('yarn master')
+            open('./dist/CNAME', 'w').write('dbanime.me')
+            push4 = os.system('git add -f dist && git commit -n -m \"'+input2+'\"&& git subtree push --prefix dist web gh-pages')
+            return push3, build, push4
         push3 = os.system('git add . && git commit -m \"'+input1+'\" && git push origin master')
-        push4 = os.system('yarn master && git add -f dist && git commit -n -m \"'+input2+'\"&& git subtree push --prefix dist web gh-pages')
-        return push3, push4
+        build = os.system('yarn  master')
+        open('./dist/CNAME', 'w').write('dbanime.me')
+        push4 = os.system('git add -f dist && git commit -n -m \"'+input2+'\"&& git subtree push --prefix dist web gh-pages')
+        return push3,build, push4
     else:
         print("you not choose anything so i'll exit")
         sys.exit()
@@ -43,4 +47,4 @@ def main() -> os.system:
 if __name__ == '__main__':
     os.system('clear')
     print("REMEMBER\n you are not required to fill commits for github pages")
-    main()
+    asyncio.run(main())
